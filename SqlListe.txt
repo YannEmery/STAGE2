@@ -1,0 +1,41 @@
+//Z_SQL is string = "SELECT * FROM intervention "
+	Z_SQL = [
+	SELECT 
+		INT_NumeroIntervention
+		,INT_IndiceIntervention
+		,INT_Date
+		,INT_DateIntervention
+		,INT_NumeroFacture
+		,INT_CodeClient
+		,INT_NomClient
+		,INT_Adresse1Intervention
+		,INT_CPIntervention
+		,INT_VilleIntervention
+		,INT_Travaux
+		,INT_Statut
+		,INT_CodeSite
+		,INT_CodeTechnicien1
+		,INT_ModeFacturation
+		,INT_CodeContrat
+		, INT_Reference
+		, INT_Activite
+		, INT_NatureIntervention
+		,T2.NumInter
+		, INT_NumCR
+		, Tech1.TTE_NomTechnicien, Tech1.TTE_PrenomTechnicien
+		, Tech2.TTE_NomTechnicien, Tech2.TTE_PrenomTechnicien
+		, Tech3.TTE_NomTechnicien, Tech3.TTE_PrenomTechnicien
+		FROM intervention
+			INNER JOIN 
+				(
+					SELECT 
+						INT_NumeroIntervention AS NumInter
+					FROM Intervention
+					%1
+					%2
+				) AS T2 ON intervention.INT_NumeroIntervention = T2.NumInter
+			LEFT JOIN t_technicien AS Tech1 ON intervention.INT_CodeTechnicien1 = Tech1.TTE_CodeTechnicien
+			LEFT JOIN t_technicien AS Tech2 ON intervention.INT_CodeTechnicien2 = Tech2.TTE_CodeTechnicien
+			LEFT JOIN t_technicien AS Tech3 ON intervention.INT_CodeTechnicien3 = Tech3.TTE_CodeTechnicien
+		%3
+	]
